@@ -201,7 +201,7 @@ class UtilsScreen {
     );
   }
 
-  Widget btnPadrao(String textoBtn, StatelessWidget tela) {
+  Widget btnPadrao(String textoBtn, Widget tela) {
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),

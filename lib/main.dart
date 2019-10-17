@@ -1,8 +1,10 @@
-import 'package:amge/external_lib/loginScreen.dart';
+import 'package:amge/pages/cadastroScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
+
+UtilsScreen screen;
 
 class MyApp extends StatelessWidget {
   @override
@@ -32,14 +34,43 @@ class _MyHomePageState extends State<MyHomePage> {
   
   @override
   Widget build(BuildContext context) {
-    UtilsScreen(Color(0xFF68a1f8), Color(0xFF3339fa), Color(0xFF5e43fc),
+    screen = UtilsScreen(Color(0xFF68a1f8), Color(0xFF3339fa), Color(0xFF5e43fc),
         Colors.white, AssetImage("assets/images/logo.png"), context);
-
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: LoginScreen(),
+        child: loginScreen(),
+      ),
+    );
+  }
+
+  Container loginScreen() {
+    return Container(
+      decoration: new BoxDecoration(
+        gradient: new LinearGradient(
+          begin: Alignment.centerLeft,
+          //end: new Alignment(1.0, 6.0), // 10% of the width, so there are ten blinds.
+          colors: [
+            screen.backgroundColor1,
+            screen.backgroundColor2
+          ], // whitish to gray
+          tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        ),
+      ),
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        children: <Widget>[
+          screen.logotipo(),
+          screen.formPadrao(Icons.account_circle,"Nome de Usuario"),
+          screen.formSenha("Senha"),
+          screen.forgetSenha(),
+          screen.btnPadrao("Entrar",CadastroScreen()),
+          new Expanded(
+            child: Divider(),
+          ),
+          screen.bottomText("Sem cadastro? Crie um agora!")
+        ],
       ),
     );
   }
