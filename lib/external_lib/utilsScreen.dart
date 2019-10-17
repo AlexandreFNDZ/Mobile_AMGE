@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 
 class UtilsScreen {
+  static UtilsScreen instance;
+
+  factory UtilsScreen(Color backgroundColor1,
+    Color backgroundColor2,
+    Color highlightColor,
+    Color foregroundColor,
+    AssetImage logo,
+    BuildContext context) {
+
+    instance ??= UtilsScreen.construtor(backgroundColor1,
+    backgroundColor2,
+    highlightColor,
+    foregroundColor,
+    logo,
+    context);
+    
+    return instance;
+
+  }
+
   final Color backgroundColor1;
   final Color backgroundColor2;
   final Color highlightColor;
@@ -8,13 +28,13 @@ class UtilsScreen {
   final AssetImage logo;
   final BuildContext context;
 
-  UtilsScreen(
-      {this.backgroundColor1,
+  UtilsScreen.construtor(
+      this.backgroundColor1,
       this.backgroundColor2,
       this.highlightColor,
       this.foregroundColor,
       this.logo,
-      this.context});
+      this.context);
 
   Widget logotipo() {
     return Container(
@@ -101,7 +121,7 @@ class UtilsScreen {
     );
   }
 
-  Widget formSenha() {
+  Widget formSenha(String txtSenha) {
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
@@ -136,7 +156,7 @@ class UtilsScreen {
               ),
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                labelText: "Senha",
+                labelText: txtSenha,
                 labelStyle: TextStyle(
                   color: this.foregroundColor,
                   fontFamily: 'Roboto',
@@ -181,7 +201,7 @@ class UtilsScreen {
     );
   }
 
-  Widget btnPadrao(String textoBtn) {
+  Widget btnPadrao(String textoBtn, StatelessWidget tela) {
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
@@ -194,7 +214,14 @@ class UtilsScreen {
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 10.0),
                 color: this.foregroundColor,
-                onPressed: () => {},
+                onPressed: () => {
+                  Navigator.push(
+                    this.context,
+                    MaterialPageRoute(
+                      builder: (context) => tela
+                      )
+                  )
+                },
                 child: Text(
                   textoBtn,
                   style: TextStyle(

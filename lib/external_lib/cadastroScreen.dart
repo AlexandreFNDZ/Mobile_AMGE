@@ -1,14 +1,15 @@
+import 'package:amge/external_lib/loginScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class CadastroScreen extends StatelessWidget {
   final Color backgroundColor1;
   final Color backgroundColor2;
   final Color highlightColor;
   final Color foregroundColor;
   final AssetImage logo;
 
-  LoginScreen(
+  CadastroScreen(
       {Key k,
       this.backgroundColor1,
       this.backgroundColor2,
@@ -18,14 +19,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UtilsScreen screen = new UtilsScreen(
-      backgroundColor1: this.backgroundColor1,
-      backgroundColor2: this.backgroundColor2,
-      highlightColor: this.highlightColor,
-      foregroundColor: this.foregroundColor,
-      logo: this.logo,
-      context: context,
-    );
+    UtilsScreen screen = UtilsScreen.instance;
 
     return Container(
       decoration: new BoxDecoration(
@@ -44,13 +38,15 @@ class LoginScreen extends StatelessWidget {
         children: <Widget>[
           screen.logotipo(),
           screen.formPadrao(Icons.account_circle,"Nome de Usuario"),
-          screen.formSenha(),
+          screen.formPadrao(Icons.alternate_email,"Email"),
+          screen.formSenha("Senha"),
+          screen.formSenha("Confirmar Senha"),
           screen.forgetSenha(),
-          screen.btnPadrao("Entrar"),
+          screen.btnPadrao("Cadastrar",LoginScreen()),
           new Expanded(
             child: Divider(),
           ),
-          screen.bottomText("Sem cadastro? Crie um agora!")
+          screen.bottomText("Já Cadastrado? Entre Agora!")
         ],
       ),
     );
