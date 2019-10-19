@@ -23,6 +23,19 @@ class ControllerUser {
     return false;
   }
 
+  bool buscaUsuByEmail(String email) {
+    if (email == this.email) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool redefineSenha(String email, String senha) {
+    /* Retorno da API para o UPDATE do usuario */
+    return true;
+  }
+
   bool cadastraUsuario(String usuario, String email, String senha) {
     Usuario usu = new Usuario(email, usuario, senha);
 

@@ -4,29 +4,29 @@ import 'package:flutter/material.dart';
 
 UtilsScreen screen = UtilsScreen.getInstance();
 
-class CadastroScreen extends StatelessWidget {
-  CadastroScreen();
+class RedefinirScreen extends StatelessWidget {
+  RedefinirScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
-      body: _CadastroScreen(),
+      body: _RedefinirScreen(),
+      backgroundColor: Colors.transparent,
     );
   }
 }
 
-class _CadastroScreen extends StatefulWidget {
-  _CadastroScreen({
+class _RedefinirScreen extends StatefulWidget {
+  _RedefinirScreen({
     Key key,
   }) : super(key: key);
 
   @override
-  __CadastroScreenState createState() => __CadastroScreenState();
+  __RedefinirScreen createState() => __RedefinirScreen();
 }
 
-class __CadastroScreenState extends State<_CadastroScreen> {
-  TextEditingController txtUsuarioController = TextEditingController();
+class __RedefinirScreen extends State<_RedefinirScreen> {
   TextEditingController txtEmailController = TextEditingController();
   TextEditingController txtSenhaController = TextEditingController();
   TextEditingController txtConfirmaSenhaController = TextEditingController();
@@ -35,75 +35,38 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(color: Colors.transparent),
+      
+      padding: EdgeInsets.only(top: 70, bottom: 70, right: 30, left: 30),
       child: Center(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: cadastroScreen(),
-        ),
-      ),
-    );
-  }
-
-  Container cadastroScreen() {
-    return Container(
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
-          begin: Alignment.centerLeft,
-          //end: new Alignment(1.0, 6.0), // 10% of the width, so there are ten blinds.
-          colors: [
-            screen.backgroundColor1,
-            screen.backgroundColor2
-          ], // whitish to gray
-          tileMode: TileMode.repeated, // repeats the gradient over the canvas
-        ),
-      ),
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        children: <Widget>[
-          logotipo(50.0, 30.0),
-          formUsuario(),
-          formEmail(),
-          formSenha(),
-          formConfirmaSenha(),
-          forgetSenha(),
-          btnPadrao(),
-          new Expanded(
-            child: Divider(),
+          child: Container(
+            child: redefinirScreen(),
           ),
-          bottomTextPop(),
-        ],
+        ),
       ),
     );
   }
 
-  Widget logotipo(double top, double bot) {
+  Container redefinirScreen() {
     return Container(
-      padding: EdgeInsets.only(top: top, bottom: bot),
+      height: MediaQuery.of(context).size.height - 140,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Color.fromRGBO(50, 50, 255, 0.6),
+      ),
       child: Center(
-        child: new Column(
-          children: <Widget>[
-            new Container(
-              height: 120.0,
-              //width: 300,
-              // margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-              decoration: BoxDecoration(
-                color: Color(0xFFFFFFFF),
-                // boxShadow: <BoxShadow>[
-                //   BoxShadow(
-                //     color: Colors.black,
-                //     offset: Offset(5.0, 5.0),
-                //     blurRadius: 5.0,
-                //   ),
-                // ],
-                shape: BoxShape.rectangle,
-                image: DecorationImage(image: screen.logo),
-                // borderRadius: BorderRadius.horizontal(
-                //   left: Radius.circular(40),
-                //   right: Radius.circular(40),
-                // ),
-              ),
-            )
-          ],
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              formEmail(),
+              formSenha(),
+              formConfirmaSenha(),
+              btnPadrao(),
+            ],
+          ),
         ),
       ),
     );
@@ -112,7 +75,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   Widget formEmail() {
     return Container(
       width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border(
@@ -154,7 +117,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Nome de usuário',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtEmailController.text = valor;
+              },
               controller: txtEmailController,
             ),
           ),
@@ -166,7 +131,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   Widget formUsuario() {
     return Container(
       width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border(
@@ -209,7 +174,6 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {},
-              controller: txtUsuarioController,
             ),
           ),
         ],
@@ -220,7 +184,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   Widget formSenha() {
     return Container(
       width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+      margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border(
@@ -263,7 +227,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Senha',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtSenhaController.text = valor;
+              },
               controller: txtSenhaController,
             ),
           ),
@@ -275,7 +241,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   Widget formConfirmaSenha() {
     return Container(
       width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+      margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border(
@@ -318,7 +284,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Senha',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtConfirmaSenhaController.text = valor;
+              },
               controller: txtConfirmaSenhaController,
             ),
           ),
@@ -327,39 +295,11 @@ class __CadastroScreenState extends State<_CadastroScreen> {
     );
   }
 
-  Widget forgetSenha() {
-    return Container(
-      width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new Container(
-            width: 150,
-          ),
-          new Expanded(
-            child: new FlatButton(
-              padding: const EdgeInsets.symmetric(vertical: 1.0),
-              color: Colors.transparent,
-              onPressed: () => {},
-              child: Text(
-                "Esqueceu a senha?",
-                textAlign: TextAlign.end,
-                style:
-                    TextStyle(color: screen.foregroundColor.withOpacity(0.8)),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget btnPadrao() {
-    bool cadastrou;
+    bool redefiniu;
     return Container(
       width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
+      margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 100.0),
       alignment: Alignment.center,
       child: new Row(
         children: <Widget>[
@@ -370,16 +310,14 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                     vertical: 10.0, horizontal: 10.0),
                 color: screen.foregroundColor,
                 onPressed: () => {
-                  cadastrou = ctrlUsuario.cadastraUsuario(
-                    txtUsuarioController.text,
-                    txtEmailController.text,
-                    txtSenhaController.text,
-                  ),
+                  if (ctrlUsuario.buscaUsuByEmail(txtEmailController.text)) {
+                    redefiniu = ctrlUsuario.redefineSenha(txtEmailController.text,txtSenhaController.text),
 
-                  if (cadastrou) {
-                    Navigator.maybePop(context),
-                  } else {
-
+                    if (redefiniu) {
+                      Navigator.maybePop(context),
+                    } else {
+                      /* Toast de erro de cadastro */
+                    }
                   }
                 },
                 child: Text(
@@ -388,38 +326,6 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                     color: screen.backgroundColor2,
                     fontSize: 25,
                   ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget bottomTextPop() {
-    return Container(
-      width: MediaQuery.of(this.context).size.width,
-      margin: const EdgeInsets.only(
-          left: 40.0, right: 40.0, top: 10.0, bottom: 20.0),
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-            child: new FlatButton(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-              color: Colors.transparent,
-              onPressed: () => {
-                Navigator.maybePop(
-                  this.context,
-                ),
-              },
-              child: Text(
-                "Já Cadastrado? \nClique aqui e volte para Logar! :)",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: screen.foregroundColor.withOpacity(0.5),
                 ),
               ),
             ),

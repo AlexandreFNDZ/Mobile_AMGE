@@ -7,7 +7,7 @@ class TelaPrincipal extends StatelessWidget {
   TelaPrincipal();
 
   @override
-  Widget build(BuildContext sContext) {
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       body: _TelaPrincipal(),
