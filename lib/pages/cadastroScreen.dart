@@ -1,3 +1,4 @@
+import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,12 @@ class _CadastroScreen extends StatefulWidget {
 }
 
 class __CadastroScreenState extends State<_CadastroScreen> {
+  TextEditingController txtUsuarioController = TextEditingController();
+  TextEditingController txtEmailController = TextEditingController();
+  TextEditingController txtSenhaController = TextEditingController();
+  TextEditingController txtConfirmaSenhaController = TextEditingController();
+  ControllerUser ctrlUsuario = ControllerUser();
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -148,6 +155,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {},
+              controller: txtEmailController,
             ),
           ),
         ],
@@ -201,6 +209,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {},
+              controller: txtUsuarioController,
             ),
           ),
         ],
@@ -255,6 +264,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {},
+              controller: txtSenhaController,
             ),
           ),
         ],
@@ -309,6 +319,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {},
+              controller: txtConfirmaSenhaController,
             ),
           ),
         ],
@@ -345,6 +356,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   }
 
   Widget btnPadrao() {
+    bool cadastrou;
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
@@ -357,7 +369,19 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 10.0),
                 color: screen.foregroundColor,
-                onPressed: () => {},
+                onPressed: () => {
+                  cadastrou = ctrlUsuario.cadastraUsuario(
+                    txtUsuarioController.text,
+                    txtEmailController.text,
+                    txtSenhaController.text,
+                  ),
+
+                  if (cadastrou) {
+                    Navigator.maybePop(context),
+                  } else {
+
+                  }
+                },
                 child: Text(
                   "Cadastrar",
                   style: TextStyle(
