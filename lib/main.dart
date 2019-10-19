@@ -1,6 +1,7 @@
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/pages/cadastroScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
+import 'package:amge/pages/redefinirScreen.dart';
 import 'package:amge/pages/telaPrincipal.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AMGE',
       theme: ThemeData(
+        canvasColor: Colors.transparent,
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Amge'),
@@ -256,7 +258,12 @@ class _MyHomePageState extends State<MyHomePage> {
             child: new FlatButton(
               padding: const EdgeInsets.symmetric(vertical: 1.0),
               color: Colors.transparent,
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RedefinirScreen()),
+                )
+              },
               child: Text(
                 "Esqueceu a senha?",
                 textAlign: TextAlign.end,

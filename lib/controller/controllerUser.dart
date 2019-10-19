@@ -1,3 +1,5 @@
+import 'package:amge/model/usuario.dart';
+
 class ControllerUser {
   static ControllerUser ctrlUserInstance;
 
@@ -19,6 +21,19 @@ class ControllerUser {
     }
 
     return false;
+  }
+
+  bool buscaUsuByEmail(String email) {
+    if (email == this.email) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool redefineSenha(String email, String senha) {
+    /* Retorno da API para o UPDATE do usuario */
+    return true;
   }
 
 }
