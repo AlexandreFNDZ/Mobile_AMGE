@@ -1,5 +1,5 @@
 import 'package:amge/controller/controllerUser.dart';
-import 'package:amge/model/redefinirDialog.dart';
+import 'package:amge/widgets/redefinirWidget.dart';
 import 'package:amge/pages/cadastroScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:amge/pages/telaPrincipal.dart';
@@ -35,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   UtilsScreen screen = UtilsScreen.getInstance(
     backgroundColor1: Color(0xFF68a1f8),
     backgroundColor2: Color(0xFF3339fa),
@@ -262,7 +263,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return new RedefinirSenha().confirmaScreen(context, screen);
+                    return RedefinirSenha(
+                      screenParameters: screen,
+                    );
                   }
                 )
               },
@@ -293,17 +296,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 10.0),
                 color: screen.foregroundColor,
-                onPressed: () => {
-                  validou = ctrlUsuario.validaLogin(
+                onPressed: () async => {
+                  validou = await ctrlUsuario.validaLogin(
                     txtUsuarioController.text,
                     txtSenhaController.text,
                   ),
+
                   if (validou)
                     {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TelaPrincipal(),
+                          builder: (context) => CadastroScreen(),
                         ),
                       )
                     }

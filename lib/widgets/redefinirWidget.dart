@@ -2,7 +2,28 @@ import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
-class RedefinirSenha {
+
+class RedefinirSenha extends StatefulWidget{
+  final UtilsScreen screenParameters;
+
+  RedefinirSenha({this.screenParameters});
+
+  @override
+  _RedefinirSenhaState createState() => _RedefinirSenhaState(this.screenParameters);
+}
+
+class _RedefinirSenhaState extends State<RedefinirSenha> {
+  UtilsScreen screen;
+
+  _RedefinirSenhaState(UtilsScreen pScreen) {
+    this.screen = pScreen;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return confirmaScreen(context, screen);
+  }
+
   String _email;
   String _senha;
   String _confirmaSenha;
@@ -34,13 +55,6 @@ class RedefinirSenha {
 
   set confirmaSenha(String confirmaSenha) {
     this._confirmaSenha = confirmaSenha;
-  }
-
-  RedefinirSenha();
-  RedefinirSenha.constructor(pEmail, pSenha, pConfirma) {
-    email = pEmail;
-    senha = pSenha;
-    confirmaSenha = pConfirma;
   }
 
   AlertDialog confirmaScreen(BuildContext context, UtilsScreen screen) {
@@ -273,4 +287,6 @@ class RedefinirSenha {
       ),
     );
   }
+
+  
 }

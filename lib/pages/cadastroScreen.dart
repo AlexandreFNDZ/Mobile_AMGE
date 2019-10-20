@@ -1,6 +1,6 @@
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
-import 'package:amge/model/redefinirDialog.dart';
+import 'package:amge/widgets/redefinirWidget.dart';
 import 'package:flutter/material.dart';
 
 UtilsScreen screen = UtilsScreen.getInstance();
@@ -32,7 +32,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   TextEditingController txtSenhaController = TextEditingController();
   TextEditingController txtConfirmaSenhaController = TextEditingController();
   ControllerUser ctrlUsuario = ControllerUser();
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -344,11 +344,12 @@ class __CadastroScreenState extends State<_CadastroScreen> {
               color: Colors.transparent,
               onPressed: () => {
                 showDialog(
-                  context: context,
-                  builder: (context) {
-                    return new RedefinirSenha().confirmaScreen(context, screen);
-                  }
-                )
+                    context: context,
+                    builder: (context) {
+                      return RedefinirSenha(
+                        screenParameters: screen,
+                      );
+                    })
               },
               child: Text(
                 "Esqueceu a senha?",
@@ -383,12 +384,12 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                     txtEmailController.text,
                     txtSenhaController.text,
                   ),
-
-                  if (cadastrou) {
-                    Navigator.maybePop(context),
-                  } else {
-
-                  }
+                  if (cadastrou)
+                    {
+                      Navigator.maybePop(context),
+                    }
+                  else
+                    {}
                 },
                 child: Text(
                   "Cadastrar",

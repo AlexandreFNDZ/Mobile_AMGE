@@ -6,6 +6,10 @@ class Usuario {
 
     return ctrlUserInstance;
   }
+
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return new Usuario(json['email'].toString(),json['usuario'],json['senha'],);
+  }
   
   String _email;
   String _usuario;

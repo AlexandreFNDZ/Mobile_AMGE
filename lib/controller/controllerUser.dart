@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:amge/model/usuario.dart';
+import 'package:http/http.dart' as http;
 
 class ControllerUser {
   static ControllerUser ctrlUserInstance;
@@ -9,17 +12,44 @@ class ControllerUser {
     return ctrlUserInstance;
   }
 
-  String email = "usuario@gmail.com";
-  String usuario = "usuario";
-  String senha = "123";
+  String email;
+  String usuario;
+  String senha;
+  http.Response respostaUserGet;
 
   ControllerUser.constructor();
 
-  bool validaLogin(String usuario, String senha) {
-    if ((usuario == this.usuario) && (senha == this.senha)) {
+  validaLogin(String pUsuario, String pSenha) async {
+    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/validar/$pUsuario/$pSenha";
+    respostaUserGet = await http.get(url);
+    Map<String, dynamic> obj = json.decode(respostaUserGet.body);
+
+    if (obj["status"].toString() == "Sucesso") {
+      List<dynamic> objectUsu = obj["dados"].map((i)=>Usuario.fromJson(i)).toList();
+      print(objectUsu.length);
+
+      if (objectUsu.length == 1) { 
+        Usuario user = objectUsu.elementAt(0);
+        
+        this.email = user.email;
+        this.usuario = user.usuario;
+        this.senha = user.senha;
+      } else {
+        print("Not Usuario");
+        return false;
+      }
+      
+    } else {
+      print("not Sucesso");
+      return false;
+    }
+
+    if ((pUsuario == this.usuario) && (md5.convert(utf8.encode(pSenha)).toString() == this.senha)) {
+      print("validou!");
       return true;
     }
 
+    print("não validou!");
     return false;
   }
 
