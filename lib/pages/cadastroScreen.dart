@@ -1,5 +1,6 @@
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
+import 'package:amge/model/redefinirDialog.dart';
 import 'package:flutter/material.dart';
 
 UtilsScreen screen = UtilsScreen.getInstance();
@@ -341,7 +342,14 @@ class __CadastroScreenState extends State<_CadastroScreen> {
             child: new FlatButton(
               padding: const EdgeInsets.symmetric(vertical: 1.0),
               color: Colors.transparent,
-              onPressed: () => {},
+              onPressed: () => {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return new RedefinirSenha().confirmaScreen(context, screen);
+                  }
+                )
+              },
               child: Text(
                 "Esqueceu a senha?",
                 textAlign: TextAlign.end,
