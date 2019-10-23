@@ -28,6 +28,7 @@ class __TelaPrincipal extends State<_TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.pink,
       child: Center(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,

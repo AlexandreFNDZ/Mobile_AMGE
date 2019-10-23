@@ -27,6 +27,7 @@ class _CadastroScreen extends StatefulWidget {
 }
 
 class __CadastroScreenState extends State<_CadastroScreen> {
+  TextEditingController txtNomeController = TextEditingController();
   TextEditingController txtUsuarioController = TextEditingController();
   TextEditingController txtEmailController = TextEditingController();
   TextEditingController txtSenhaController = TextEditingController();
@@ -62,6 +63,7 @@ class __CadastroScreenState extends State<_CadastroScreen> {
       child: Column(
         children: <Widget>[
           logotipo(50.0, 30.0),
+          formNome(),
           formUsuario(),
           formEmail(),
           formSenha(),
@@ -155,7 +157,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Nome de usuário',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtEmailController.text = valor;
+              },
               controller: txtEmailController,
             ),
           ),
@@ -209,8 +213,66 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Nome de usuário',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtUsuarioController.text = valor;
+              },
               controller: txtUsuarioController,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget formNome() {
+    return Container(
+      width: MediaQuery.of(this.context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+              color: screen.foregroundColor,
+              width: 0.5,
+              style: BorderStyle.solid),
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Padding(
+            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+            child: Icon(
+              Icons.account_circle,
+              color: screen.foregroundColor,
+            ),
+          ),
+          new Expanded(
+            child: TextField(
+              style: TextStyle(
+                color: screen.foregroundColor,
+                fontFamily: 'VT323',
+                fontSize: 35,
+              ),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                labelText: "Nome Completo",
+                labelStyle: TextStyle(
+                  color: screen.foregroundColor,
+                  fontFamily: 'Roboto',
+                  fontSize: 18,
+                ),
+                contentPadding: EdgeInsets.only(left: 20),
+                border: InputBorder.none,
+                //hintText: 'Nome de usuário',
+                //hintStyle: TextStyle(color: this.foregroundColor),
+              ),
+              onSubmitted: (valor) {
+                txtNomeController.text = valor;
+              },
+              controller: txtNomeController,
             ),
           ),
         ],
@@ -264,7 +326,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Senha',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtSenhaController.text = valor;
+              },
               controller: txtSenhaController,
             ),
           ),
@@ -319,7 +383,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 //hintText: 'Senha',
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
-              onSubmitted: (valor) {},
+              onSubmitted: (valor) {
+                txtConfirmaSenhaController.text = valor;
+              },
               controller: txtConfirmaSenhaController,
             ),
           ),
@@ -378,8 +444,9 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 10.0, horizontal: 10.0),
                 color: screen.foregroundColor,
-                onPressed: () => {
-                  cadastrou = ctrlUsuario.cadastraUsuario(
+                onPressed: () async => {
+                  cadastrou = await ctrlUsuario.cadastraUsuario(
+                    txtNomeController.text,
                     txtUsuarioController.text,
                     txtEmailController.text,
                     txtSenhaController.text,

@@ -20,7 +20,7 @@ class ControllerUser {
   ControllerUser.constructor();
 
   validaLogin(String pUsuario, String pSenha) async {
-    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/validar/$pUsuario/$pSenha";
+    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/buscar/$pUsuario/$pSenha";
     respostaUserGet = await http.get(url);
     Map<String, dynamic> obj = json.decode(respostaUserGet.body);
 
@@ -54,6 +54,7 @@ class ControllerUser {
   }
 
   bool buscaUsuByEmail(String email) {
+    //http://143.106.241.1/cl18463/tcc/api/usuario/inserir/
     if (email == this.email) {
       return true;
     }
@@ -66,14 +67,29 @@ class ControllerUser {
     return true;
   }
 
-  bool cadastraUsuario(String usuario, String email, String senha) {
+  cadastraUsuario(String pNome, String pUsuario, String pEmail, String pSenha) async {
     Usuario usu = new Usuario(email, usuario, senha);
+    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/inserir/$pNome/$pUsuario/$pEmail/$pSenha";
+    respostaUserGet = await http.get(url);
+    print(respostaUserGet.body.toString());
+    Map<String, dynamic> obj = json.decode(respostaUserGet.body);
+    // bad requeste,, replace " " por "%20"
+    //http://143.106.241.1/cl18463/tcc/api/usuario/inserir/ -nome- / -usuario- / -email- / -senha- / -telefone-
+    if (obj["status"].toString() == "Sucesso") {
+      String inseriu = obj["dados"].toString();
+      print(inseriu.length);
 
-    if (/*retorno API cadastro no banco*/ usu != null) {
-      return true;
+      if (inseriu == "true") {
+        return true;
+      } else {
+        print("Not Usuario");
+        return false;
+      }
+      
+    } else {
+      print("not Sucesso");
+      return false;
     }
-
-    return false;
   }
 
 }
