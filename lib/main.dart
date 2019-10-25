@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   UtilsScreen screen = UtilsScreen.getInstance(
     backgroundColor1: Color(0xFF68a1f8),
     backgroundColor2: Color(0xFF3339fa),
@@ -261,13 +260,12 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.transparent,
               onPressed: () => {
                 showDialog(
-                  context: context,
-                  builder: (context) {
-                    return RedefinirSenha(
-                      screenParameters: screen,
-                    );
-                  }
-                )
+                    context: context,
+                    builder: (context) {
+                      return RedefinirSenha(
+                        screenParameters: screen,
+                      );
+                    })
               },
               child: Text(
                 "Esqueceu a senha?",
@@ -283,40 +281,50 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget btnPadrao() {
-    bool validou;
+    String validou;
+    var snack;
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
       alignment: Alignment.center,
-      child: new Row(
+      child: Row(
         children: <Widget>[
-          new Expanded(
-            child: new Container(
-              child: new FlatButton(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 10.0),
-                color: screen.foregroundColor,
-                onPressed: () async => {
-                  validou = await ctrlUsuario.validaLogin(
-                    txtUsuarioController.text,
-                    txtSenhaController.text,
-                  ),
-
-                  if (validou)
-                    {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TelaPrincipal(),
+          Expanded(
+            child: Container(
+              child: Builder(
+                builder: (context) => FlatButton(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  color: screen.foregroundColor,
+                  onPressed: () async => {
+                    validou = await ctrlUsuario.validaLogin(
+                      txtUsuarioController.text,
+                      txtSenhaController.text,
+                    ),
+                    if (validou == "OK")
+                      {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TelaPrincipal(),
+                          ),
+                        )
+                      }
+                    else
+                      {
+                        snack = SnackBar(
+                          backgroundColor: Colors.redAccent,
+                          content: Text(validou),
                         ),
-                      )
-                    }
-                },
-                child: Text(
-                  "Entrar",
-                  style: TextStyle(
-                    color: screen.backgroundColor2,
-                    fontSize: 25,
+                        Scaffold.of(context).showSnackBar(snack),
+                      },
+                  },
+                  child: Text(
+                    "Entrar",
+                    style: TextStyle(
+                      color: screen.backgroundColor2,
+                      fontSize: 25,
+                    ),
                   ),
                 ),
               ),
@@ -359,5 +367,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
 }

@@ -455,8 +455,6 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                     {
                       Navigator.maybePop(context),
                     }
-                  else
-                    {}
                 },
                 child: Text(
                   "Cadastrar",

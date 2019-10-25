@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:amge/model/usuario.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ControllerUser {
@@ -12,6 +13,7 @@ class ControllerUser {
     return ctrlUserInstance;
   }
 
+  var snack;
   String email;
   String usuario;
   String senha;
@@ -20,6 +22,7 @@ class ControllerUser {
   ControllerUser.constructor();
 
   validaLogin(String pUsuario, String pSenha) async {
+    String retorno;
     String url = "http://143.106.241.1/cl18463/tcc/api/usuario/buscar/$pUsuario/$pSenha";
     respostaUserGet = await http.get(url);
     Map<String, dynamic> obj = json.decode(respostaUserGet.body);
@@ -34,23 +37,25 @@ class ControllerUser {
         this.email = user.email;
         this.usuario = user.usuario;
         this.senha = user.senha;
+        print(this.email);
+        print(this.usuario);
+        print(this.senha);
       } else {
-        print("Not Usuario");
-        return false;
+        retorno = "Usuário não encontrado!";
       }
       
     } else {
-      print("not Sucesso");
-      return false;
+      retorno = "Erro de Conexão, tente mais tarde!";
     }
-
+    print(pUsuario);
+    print(md5.convert(utf8.encode(pSenha)).toString());
     if ((pUsuario == this.usuario) && (md5.convert(utf8.encode(pSenha)).toString() == this.senha)) {
-      print("validou!");
-      return true;
+      retorno = "OK";
+    } else {
+      retorno = "Usuário e/ou Senha Inválida!";
     }
 
-    print("não validou!");
-    return false;
+    return retorno;
   }
 
   bool buscaUsuByEmail(String email) {
