@@ -431,7 +431,8 @@ class __CadastroScreenState extends State<_CadastroScreen> {
   }
 
   Widget btnPadrao() {
-    bool cadastrou;
+    String cadastrou;
+    var snack;
     return Container(
       width: MediaQuery.of(this.context).size.width,
       margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
@@ -451,10 +452,22 @@ class __CadastroScreenState extends State<_CadastroScreen> {
                     txtEmailController.text,
                     txtSenhaController.text,
                   ),
-                  if (cadastrou)
+                  if (cadastrou == "OK")
                     {
+                      snack = SnackBar(
+                        backgroundColor: Colors.redAccent,
+                        content: Text("Cadastrado com Sucesso!"),
+                      ),
                       Navigator.maybePop(context),
                     }
+                  else
+                    {
+                      snack = SnackBar(
+                        backgroundColor: Colors.redAccent,
+                        content: Text(cadastrou),
+                      ),
+                    },
+                  Scaffold.of(context).showSnackBar(snack),
                 },
                 child: Text(
                   "Cadastrar",

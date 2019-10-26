@@ -37,9 +37,6 @@ class ControllerUser {
         this.email = user.email;
         this.usuario = user.usuario;
         this.senha = user.senha;
-        print(this.email);
-        print(this.usuario);
-        print(this.senha);
       } else {
         retorno = "Usuário não encontrado!";
       }
@@ -67,34 +64,51 @@ class ControllerUser {
     return false;
   }
 
-  bool redefineSenha(String email, String senha) {
-    /* Retorno da API para o UPDATE do usuario */
-    return true;
+  redefineSenha(String pEmail, String pSenha) async {
+    String retorno;
+    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/redefinir/$pEmail/$pSenha";
+    respostaUserGet = await http.get(url);
+    Map<String, dynamic> obj = json.decode(respostaUserGet.body);
+    // bad requeste,, replace " " por "%20"
+    //http://143.106.241.1/cl18463/tcc/api/usuario/inserir/ -nome- / -usuario- / -email- / -senha- / -telefone-
+    if (obj["status"].toString() == "Sucesso") {
+      String atualizou = obj["dados"].toString();
+
+      if (atualizou == "true") {
+        retorno = "OK";
+      } else {
+        retorno = "Email não encontrado!";
+      }
+      
+    } else {
+      retorno = "Erro de Conexão! Tente novamente mais tarde!";
+    }
+
+    return retorno;
   }
 
   cadastraUsuario(String pNome, String pUsuario, String pEmail, String pSenha) async {
+    String retorno;
     Usuario usu = new Usuario(email, usuario, senha);
     String url = "http://143.106.241.1/cl18463/tcc/api/usuario/inserir/$pNome/$pUsuario/$pEmail/$pSenha";
     respostaUserGet = await http.get(url);
-    print(respostaUserGet.body.toString());
     Map<String, dynamic> obj = json.decode(respostaUserGet.body);
     // bad requeste,, replace " " por "%20"
     //http://143.106.241.1/cl18463/tcc/api/usuario/inserir/ -nome- / -usuario- / -email- / -senha- / -telefone-
     if (obj["status"].toString() == "Sucesso") {
       String inseriu = obj["dados"].toString();
-      print(inseriu.length);
 
       if (inseriu == "true") {
-        return true;
+        retorno = "OK";
       } else {
-        print("Not Usuario");
-        return false;
+        retorno = "Usuario ou email já Cadastrado!";
       }
       
     } else {
-      print("not Sucesso");
-      return false;
+      retorno = "Erro de Conexão! Tente novamente mais tarde!";
     }
+
+    return retorno;
   }
 
 }

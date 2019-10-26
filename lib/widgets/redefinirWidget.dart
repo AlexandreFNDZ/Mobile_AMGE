@@ -2,14 +2,14 @@ import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
-
-class RedefinirSenha extends StatefulWidget{
+class RedefinirSenha extends StatefulWidget {
   final UtilsScreen screenParameters;
 
   RedefinirSenha({this.screenParameters});
 
   @override
-  _RedefinirSenhaState createState() => _RedefinirSenhaState(this.screenParameters);
+  _RedefinirSenhaState createState() =>
+      _RedefinirSenhaState(this.screenParameters);
 }
 
 class _RedefinirSenhaState extends State<RedefinirSenha> {
@@ -24,38 +24,10 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
     return confirmaScreen(context, screen);
   }
 
-  String _email;
-  String _senha;
-  String _confirmaSenha;
-
   TextEditingController txtEmailController = TextEditingController();
   TextEditingController txtSenhaController = TextEditingController();
   TextEditingController txtConfirmaSenhaController = TextEditingController();
   ControllerUser ctrlUsuario = ControllerUser();
-
-  String get email {
-    return _email;
-  }
-
-  set email(String email) {
-    this._email = email;
-  }
-
-  String get senha {
-    return _senha;
-  }
-
-  set senha(String senha) {
-    this._senha = senha;
-  }
-
-  String get confirmaSenha {
-    return _confirmaSenha;
-  }
-
-  set confirmaSenha(String confirmaSenha) {
-    this._confirmaSenha = confirmaSenha;
-  }
 
   AlertDialog confirmaScreen(BuildContext context, UtilsScreen screen) {
     Widget formEmail() {
@@ -229,7 +201,8 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
     }
 
     Widget btnPadrao() {
-      bool atualizou;
+      String atualizou;
+      var snack;
       return Container(
         padding: EdgeInsets.only(top: 50),
         width: MediaQuery.of(context).size.width,
@@ -239,27 +212,43 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
           children: <Widget>[
             new Expanded(
               child: new Container(
-                child: new FlatButton(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 10.0),
-                  color: screen.backgroundColor1,
-                  onPressed: () => {
-                    atualizou = ctrlUsuario.redefineSenha(
-                      txtEmailController.text,
-                      txtSenhaController.text,
-                    ),
-                    if (atualizou)
-                      {
-                        Navigator.maybePop(context),
-                      }
-                    else
-                      {}
-                  },
-                  child: Text(
-                    "Cadastrar",
-                    style: TextStyle(
-                      color: screen.foregroundColor,
-                      fontSize: 25,
+                child: Builder( // ERRO DE ANCESTOR SCAFFOLD___CORRIGIR___
+                  builder: (newContext) => FlatButton(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    color: screen.backgroundColor1,
+                    onPressed: () async => {
+                      print(txtSenhaController.text),
+                      print(txtConfirmaSenhaController.text),
+                      if (txtSenhaController.text ==
+                          txtConfirmaSenhaController.text)
+                        {
+                          atualizou = await ctrlUsuario.redefineSenha(
+                            txtEmailController.text,
+                            txtSenhaController.text,
+                          ),
+                        }
+                      else
+                        {atualizou = "Campos senhas diferem!"},
+                      if (atualizou == "OK")
+                        {
+                          Navigator.maybePop(newContext),
+                        }
+                      else
+                        {
+                          snack = SnackBar(
+                            backgroundColor: Colors.redAccent,
+                            content: Text(atualizou),
+                          ),
+                          Scaffold.of(context).showSnackBar(snack),
+                        }
+                    },
+                    child: Text(
+                      "Cadastrar",
+                      style: TextStyle(
+                        color: screen.foregroundColor,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
@@ -287,6 +276,4 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
       ),
     );
   }
-
-  
 }
