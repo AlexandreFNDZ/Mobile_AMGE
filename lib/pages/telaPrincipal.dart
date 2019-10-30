@@ -2,6 +2,7 @@ import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 
 UtilsScreen screen = UtilsScreen.getInstance();
+int _selectedIndex;
 
 class TelaPrincipal extends StatelessWidget {
   TelaPrincipal();
@@ -11,6 +12,44 @@ class TelaPrincipal extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       body: _TelaPrincipal(),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            backgroundColor: Colors.green,
+            icon: Center(
+              child: Icon(Icons.home),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.greenAccent,
+            icon: Center(
+              child: Icon(Icons.home),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.purple,
+            icon: Center(
+              child: Icon(Icons.home),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.blueAccent,
+            icon: Center(
+              child: Icon(Icons.home),
+            ),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.blue,
+            icon: Center(
+              child: Icon(Icons.home),
+            ),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap:(index){},
+      ),
     );
   }
 }
