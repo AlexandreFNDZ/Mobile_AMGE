@@ -177,7 +177,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {
-                txtUsuarioController.text = valor;
+                setState(() { 
+                  txtUsuarioController.text = valor;
+                });
               },
               controller: txtUsuarioController,
             ),
@@ -234,7 +236,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 //hintStyle: TextStyle(color: this.foregroundColor),
               ),
               onSubmitted: (valor) {
-                txtSenhaController.text = valor;
+                setState(() {
+                  txtSenhaController.text = valor;  
+                });
               },
               controller: txtSenhaController,
             ),

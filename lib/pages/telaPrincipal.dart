@@ -1,80 +1,86 @@
 import 'package:amge/external_lib/utilsScreen.dart';
+import 'package:amge/pages/calendar.dart';
+import 'package:amge/pages/chat.dart';
+import 'package:amge/pages/eventos.dart';
+import 'package:amge/pages/menu.dart';
 import 'package:flutter/material.dart';
 
-UtilsScreen screen = UtilsScreen.getInstance();
-int _selectedIndex;
 
-class TelaPrincipal extends StatelessWidget {
+UtilsScreen screen = UtilsScreen.getInstance();
+int _selectedIndex = 0;
+
+class TelaPrincipal extends StatefulWidget {
   TelaPrincipal();
 
   @override
+  _TelaPrincipalState createState() => _TelaPrincipalState();
+}
+
+class _TelaPrincipalState extends State<TelaPrincipal> {
+  @override
   Widget build(BuildContext context) {
+    List<Widget> telas = [
+      Menu(),
+      Eventos(),
+      Text("tela 3"),
+      Calendar(),
+      Chat(),
+    ];
+
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        width: 75,
+        height: 75,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {},
+            tooltip: 'Novo Evento',
+            child: Icon(Icons.add, size: 40),
+            elevation: 2.0,
+          ),
+        ),
+      ),
       resizeToAvoidBottomPadding: true,
-      body: _TelaPrincipal(),
+      body: telas[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        items: const <BottomNavigationBarItem>[
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        items: [
           BottomNavigationBarItem(
             backgroundColor: Colors.green,
-            icon: Center(
-              child: Icon(Icons.home),
-            ),
+            title: Text("Menu"),
+            icon: Icon(Icons.menu, size: 30,),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.greenAccent,
-            icon: Center(
-              child: Icon(Icons.home),
-            ),
+            title: Text("Eventos"),
+            icon: Icon(Icons.event, size: 30,),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.purple,
-            icon: Center(
-              child: Icon(Icons.home),
-            ),
+            title: Text(""),
+            icon: Icon(Icons.add, size: 0),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.blueAccent,
-            icon: Center(
-              child: Icon(Icons.home),
-            ),
+            title: Text("Calendar"),
+            icon: Icon(Icons.date_range, size: 30,),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.blue,
-            icon: Center(
-              child: Icon(Icons.home),
-            ),
+            title: Text("Chat"),
+            icon: Icon(Icons.chat, size: 30,),
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap:(index){},
-      ),
-    );
-  }
-}
-
-class _TelaPrincipal extends StatefulWidget {
-  _TelaPrincipal({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  __TelaPrincipal createState() => __TelaPrincipal();
-}
-
-class __TelaPrincipal extends State<_TelaPrincipal> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.pink,
-      child: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            child: Text("PAGINA PRINCIPAL"),
-          ),
-        ),
+        unselectedItemColor: Colors.black54,
+        selectedItemColor: Colors.blue,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }

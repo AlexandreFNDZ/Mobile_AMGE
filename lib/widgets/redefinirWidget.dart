@@ -76,7 +76,9 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
                   //hintStyle: TextStyle(color: this.foregroundColor),
                 ),
                 onSubmitted: (valor) {
-                  txtEmailController.text = valor;
+                  setState(() {                    
+                    txtEmailController.text = valor;
+                  });
                 },
                 controller: txtEmailController,
               ),
@@ -133,7 +135,9 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
                   //hintStyle: TextStyle(color: this.foregroundColor),
                 ),
                 onSubmitted: (valor) {
-                  txtSenhaController.text = valor;
+                  setState(() {
+                    txtSenhaController.text = valor;
+                  });
                 },
                 controller: txtSenhaController,
               ),
@@ -190,7 +194,9 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
                   //hintStyle: TextStyle(color: this.foregroundColor),
                 ),
                 onSubmitted: (valor) {
-                  txtConfirmaSenhaController.text = valor;
+                  setState(() {  
+                    txtConfirmaSenhaController.text = valor;
+                  });
                 },
                 controller: txtConfirmaSenhaController,
               ),
