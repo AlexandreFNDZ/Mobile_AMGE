@@ -218,7 +218,7 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
           children: <Widget>[
             new Expanded(
               child: new Container(
-                child: Builder( // ERRO DE ANCESTOR SCAFFOLD___CORRIGIR___
+                child: Builder( 
                   builder: (newContext) => FlatButton(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),

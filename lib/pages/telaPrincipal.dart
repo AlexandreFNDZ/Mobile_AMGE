@@ -5,7 +5,6 @@ import 'package:amge/pages/eventos.dart';
 import 'package:amge/pages/menu.dart';
 import 'package:flutter/material.dart';
 
-
 UtilsScreen screen = UtilsScreen.getInstance();
 int _selectedIndex = 0;
 
@@ -42,7 +41,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         ),
       ),
       resizeToAvoidBottomPadding: true,
-      body: telas[_selectedIndex],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Color(0xFF6da8ff),
+        child: Center(
+          child: telas[_selectedIndex],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -50,12 +56,18 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           BottomNavigationBarItem(
             backgroundColor: Colors.green,
             title: Text("Menu"),
-            icon: Icon(Icons.menu, size: 30,),
+            icon: Icon(
+              Icons.menu,
+              size: 30,
+            ),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.greenAccent,
             title: Text("Eventos"),
-            icon: Icon(Icons.event, size: 30,),
+            icon: Icon(
+              Icons.event,
+              size: 30,
+            ),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.purple,
@@ -65,12 +77,18 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           BottomNavigationBarItem(
             backgroundColor: Colors.blueAccent,
             title: Text("Calendar"),
-            icon: Icon(Icons.date_range, size: 30,),
+            icon: Icon(
+              Icons.date_range,
+              size: 30,
+            ),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.blue,
             title: Text("Chat"),
-            icon: Icon(Icons.chat, size: 30,),
+            icon: Icon(
+              Icons.chat,
+              size: 30,
+            ),
           ),
         ],
         currentIndex: _selectedIndex,
