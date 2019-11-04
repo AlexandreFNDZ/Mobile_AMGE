@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Eventos extends StatefulWidget {
   @override
@@ -13,8 +14,14 @@ class _EventosState extends State<Eventos> {
   double heightMenor = 80;
   double heightMaior = 100;
 
+  var diaSemana = ["SEG", "TER", "QUA", "QUI", "SEX", "SAB", "DOM"];
+  int hojeDay = (DateTime.now().subtract(Duration(days: 1)).weekday);
+
+  var eventos;
+
   @override
   Widget build(BuildContext context) {
+    print(getDiaCerto((hojeDay) - 2));
     return Column(
       children: <Widget>[
         Padding(
@@ -32,13 +39,15 @@ class _EventosState extends State<Eventos> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "DOM",
+                      diaSemana[getDiaCerto((hojeDay) - 2)].toString(),
                       style: TextStyle(color: Colors.white60),
                     ),
                     Text(
-                      "20",
+                      DateTime.now().subtract(Duration(days: 2)).day.toString(),
                       style: TextStyle(
-                          fontSize: fontSizeMenor, color: Colors.white60),
+                        fontSize: fontSizeMenor,
+                        color: Colors.white60,
+                      ),
                     )
                   ],
                 ),
@@ -53,11 +62,11 @@ class _EventosState extends State<Eventos> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "SEG",
+                      diaSemana[getDiaCerto((hojeDay) - 1)].toString(),
                       style: TextStyle(color: Colors.white60),
                     ),
                     Text(
-                      "21",
+                      DateTime.now().subtract(Duration(days: 1)).day.toString(),
                       style: TextStyle(
                           fontSize: fontSizeMenor, color: Colors.white60),
                     )
@@ -73,9 +82,9 @@ class _EventosState extends State<Eventos> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Text("TER"),
+                    Text(diaSemana[getDiaCerto(hojeDay)].toString()),
                     Text(
-                      "22",
+                      DateTime.now().day.toString(),
                       style: TextStyle(fontSize: fontSizeMaior),
                     )
                   ],
@@ -91,11 +100,11 @@ class _EventosState extends State<Eventos> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "QUA",
+                      diaSemana[getDiaCerto((hojeDay) + 1)].toString(),
                       style: TextStyle(color: Colors.blue),
                     ),
                     Text(
-                      "23",
+                      DateTime.now().add(Duration(days: 1)).day.toString(),
                       style: TextStyle(
                           fontSize: fontSizeMenor, color: Colors.blue),
                     )
@@ -112,11 +121,11 @@ class _EventosState extends State<Eventos> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      "QUI",
+                      diaSemana[getDiaCerto((hojeDay) + 2)].toString(),
                       style: TextStyle(color: Colors.blue),
                     ),
                     Text(
-                      "24",
+                      DateTime.now().add(Duration(days: 2)).day.toString(),
                       style: TextStyle(
                           fontSize: fontSizeMenor, color: Colors.blue),
                     )
@@ -219,5 +228,15 @@ class _EventosState extends State<Eventos> {
         )
       ],
     );
+  }
+
+  getDiaCerto(int dia) {
+    if (dia < 0) {
+      dia += 7;
+    } else if (dia > 6) {
+      dia -= 7;
+    }
+
+    return dia;
   }
 }
