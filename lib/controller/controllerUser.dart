@@ -17,9 +17,19 @@ class ControllerUser {
   String email;
   String usuario;
   String senha;
+  String codUsu;
   http.Response respostaUserGet;
 
   ControllerUser.constructor();
+
+  getCodUsu(String usu, String pass) async {
+    String url = "http://143.106.241.1/cl18463/tcc/api/usuario/buscar/$usu/$pass";
+    respostaUserGet = await http.get(url);
+
+    var obj = json.decode(respostaUserGet.body);
+
+    return int.parse(obj["dados"]["codigo"]);
+  }
 
   validaLogin(String pUsuario, String pSenha) async {
     String retorno;
@@ -29,14 +39,15 @@ class ControllerUser {
 
     if (obj["status"].toString() == "Sucesso") {
       List<dynamic> objectUsu = obj["dados"].map((i)=>Usuario.fromJson(i)).toList();
-      print(objectUsu.length);
+ 
 
       if (objectUsu.length == 1) { 
         Usuario user = objectUsu.elementAt(0);
-        
+      
         this.email = user.email;
         this.usuario = user.usuario;
         this.senha = user.senha;
+        this.codUsu = user.codigo;
       } else {
         retorno = "Usuário não encontrado!";
       }

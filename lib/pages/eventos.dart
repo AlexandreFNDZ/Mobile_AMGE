@@ -1,3 +1,7 @@
+import 'package:amge/controller/controllerUser.dart';
+import 'package:amge/model/userEvents.dart';
+import 'package:amge/controller/controllerEvents.dart';
+import 'package:amge/model/usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,14 +18,19 @@ class _EventosState extends State<Eventos> {
   double heightMenor = 80;
   double heightMaior = 100;
 
+  Usuario usu = Usuario.ctrlUserInstance;
+
   var diaSemana = ["SEG", "TER", "QUA", "QUI", "SEX", "SAB", "DOM"];
   int hojeDay = (DateTime.now().subtract(Duration(days: 1)).weekday);
 
   var eventos;
 
+  ControllerEvents ctrlEvento = ControllerEvents();
+  ControllerUser ctrlUser = ControllerUser();
+
   @override
   Widget build(BuildContext context) {
-    print(getDiaCerto((hojeDay) - 2));
+    print(usu.codigo);
     return Column(
       children: <Widget>[
         Padding(
@@ -135,6 +144,7 @@ class _EventosState extends State<Eventos> {
             ],
           ),
         ),
+
         Row(
           children: <Widget>[
             Container(
@@ -159,18 +169,45 @@ class _EventosState extends State<Eventos> {
                 color: Colors.white,
               ),
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text("EVENTO 1"),
-                    Text("EVENTO 2"),
-                    Text("EVENTO 3")
-                  ],
+                child: FutureBuilder<List<UserEvents>>(
+                  future: ctrlEvento.getEventosHoje(),
+                  builder: (context, snapshot) {
+                    switch(snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.waiting: 
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                        break;
+                      case ConnectionState.active:
+                      case ConnectionState.done:
+                        if(snapshot.hasError) {
+                          return Text("Houve um erro ao Carregar");
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              List<UserEvents> lista = snapshot.data;
+                              UserEvents evento = lista[index];
+
+                              return ListTile(
+                                title: Text(evento.getTitulo()),
+                                subtitle: Text(evento.getDataIni()),
+                              );
+                            },
+                          );
+                        }
+                        break;
+                    }
+
+                    return Text("Erro fora do Switch");
+                  },
                 ),
               ),
             ),
           ],
         ),
+        
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Column(
@@ -194,35 +231,44 @@ class _EventosState extends State<Eventos> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 272,
-                child: ListView(
-                  children: <Widget>[
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C"),
-                    Text("EVENTO A"),
-                    Text("EVENTO B"),
-                    Text("EVENTO C")
-                  ],
+                child: Center(
+                  child: FutureBuilder<List<UserEvents>>(
+                  future: ctrlEvento.getProxEventos(),
+                  builder: (context, snapshot) {
+                    
+                    switch(snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.waiting: 
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                        break;
+                      case ConnectionState.active:
+                      case ConnectionState.done:
+                        if(snapshot.hasError) {
+                          return Text("Houve um erro ao Carregar");
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              List<UserEvents> lista = snapshot.data;
+                              UserEvents evento = lista[index];
+
+                              return ListTile(
+                                title: Text(evento.getTitulo()),
+                                subtitle: Text(evento.getDataIni()),
+                              );
+                            },
+                          );
+                        }
+                        break;
+                    }
+
+                    return Text("Erro fora do Switch");
+                  },
                 ),
-              )
+                ),
+              ),
             ],
           ),
         )

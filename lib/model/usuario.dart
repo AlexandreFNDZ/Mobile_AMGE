@@ -1,19 +1,20 @@
 class Usuario {
   static Usuario ctrlUserInstance;
 
-  factory Usuario(pEmail, pUsuario, pSenha) {
-    ctrlUserInstance ??= Usuario.constructor(pEmail, pUsuario, pSenha);
+  factory Usuario(pEmail, pUsuario, pSenha, {pCod}) {
+    ctrlUserInstance ??= Usuario.constructor(pEmail, pUsuario, pSenha,pCod: pCod);
 
     return ctrlUserInstance;
   }
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
-    return new Usuario(json['email'].toString(),json['usuario'],json['senha'],);
+    return new Usuario(json['email'].toString(),json['usuario'],json['senha'],pCod: json['codigo']);
   }
   
   String _email;
   String _usuario;
   String _senha;
+  String _codigo;
 
   String get email {
     return _email;
@@ -36,10 +37,18 @@ class Usuario {
     this._senha = senha;
   }
 
-  Usuario.constructor(pEmail, pUsuario, pSenha) {
+  String get codigo {
+    return _codigo;
+  }
+  set codigo(String codigo) {
+    this._codigo = codigo;
+  }
+
+  Usuario.constructor(pEmail, pUsuario, pSenha, {pCod}) {
     email = pEmail;
     usuario = pUsuario;
     senha = pSenha;
+    codigo = pCod;
   }
 
 }
