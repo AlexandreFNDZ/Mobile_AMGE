@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class ControllerEvents {
   static ControllerEvents ctrlEventsInstance;
 
-  static Usuario usu = Usuario.ctrlUserInstance;
+  static Usuario usu;
   factory ControllerEvents() {
     ctrlEventsInstance ??= ControllerEvents.constructor();
 
@@ -21,6 +21,7 @@ class ControllerEvents {
 
 
   Future<List<UserEvents>> getEventos() async {
+    usu = Usuario.ctrlUserInstance;
     int idUsuario = int.parse(usu.codigo);
 
     http.Response resposta = await http.get(url + "eventPers/buscar/$idUsuario");
@@ -40,6 +41,7 @@ class ControllerEvents {
   } 
 
   Future<List<UserEvents>> getEventosHoje() async {
+    usu = Usuario.ctrlUserInstance;
     int idUsuario = int.parse(usu.codigo);
 
     http.Response resposta = await http.get(url + "eventPers/buscar/$idUsuario");
@@ -62,6 +64,7 @@ class ControllerEvents {
   } 
 
   Future<List<UserEvents>> getProxEventos() async {
+    usu = Usuario.ctrlUserInstance;
     int idUsuario = int.parse(usu.codigo);
 
     http.Response resposta = await http.get(url + "eventPers/buscar/$idUsuario");

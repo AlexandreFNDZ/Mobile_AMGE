@@ -1,4 +1,5 @@
 import 'package:amge/controller/controllerUser.dart';
+import 'package:amge/model/usuario.dart';
 import 'package:amge/widgets/redefinirWidget.dart';
 import 'package:amge/pages/cadastroScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
@@ -48,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+         
     UtilsScreen screen = UtilsScreen.getInstance(
       backgroundColor1: Color(0xFF68a1f8),
       backgroundColor2: Color(0xFF3339fa),
@@ -301,6 +303,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       vertical: 10.0, horizontal: 10.0),
                   color: screen.foregroundColor,
                   onPressed: () async => {
+                    setState(() {
+                      Usuario.clearInstance();
+                      ControllerUser.clearInstance();
+                    }),
                     validou = await ctrlUsuario.validaLogin(
                       txtUsuarioController.text,
                       txtSenhaController.text,

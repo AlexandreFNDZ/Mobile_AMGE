@@ -42,12 +42,17 @@ class ControllerUser {
  
 
       if (objectUsu.length == 1) { 
+        
         Usuario user = objectUsu.elementAt(0);
-      
+        print(user.email);
+        print(this.email);
+        print(user.usuario);
+        print(this.usuario);
         this.email = user.email;
         this.usuario = user.usuario;
         this.senha = user.senha;
         this.codUsu = user.codigo;
+        
       } else {
         retorno = "Usuário não encontrado!";
       }
@@ -55,8 +60,10 @@ class ControllerUser {
     } else {
       retorno = "Erro de Conexão, tente mais tarde!";
     }
-    print(pUsuario);
-    print(md5.convert(utf8.encode(pSenha)).toString());
+    // print(this.usuario);
+    // print(this.senha);
+    // print(pUsuario);
+    // print(md5.convert(utf8.encode(pSenha)).toString());
     if ((pUsuario == this.usuario) && (md5.convert(utf8.encode(pSenha)).toString() == this.senha)) {
       retorno = "OK";
     } else {
@@ -120,6 +127,10 @@ class ControllerUser {
     }
 
     return retorno;
+  }
+
+  static clearInstance() {
+    ctrlUserInstance = null;
   }
 
 }

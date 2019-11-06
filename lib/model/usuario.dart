@@ -51,4 +51,8 @@ class Usuario {
     codigo = pCod;
   }
 
+  static void clearInstance() {
+    ctrlUserInstance = null;
+  }
+
 }
