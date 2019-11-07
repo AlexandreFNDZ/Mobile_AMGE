@@ -1,4 +1,5 @@
 import 'package:amge/external_lib/utilsScreen.dart';
+import 'package:amge/pages/cadastroEventos.dart';
 import 'package:amge/pages/calendar.dart';
 import 'package:amge/pages/chat.dart';
 import 'package:amge/pages/eventos.dart';
@@ -6,7 +7,7 @@ import 'package:amge/pages/menu.dart';
 import 'package:flutter/material.dart';
 
 UtilsScreen screen = UtilsScreen.getInstance();
-int _selectedIndex = 0;
+int _selectedIndex = 1;
 
 class TelaPrincipal extends StatefulWidget {
   TelaPrincipal();
@@ -33,7 +34,14 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         height: 75,
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CadastroEventos()
+                ),
+              );
+            },
             tooltip: 'Novo Evento',
             child: Icon(Icons.add, size: 40),
             elevation: 2.0,
