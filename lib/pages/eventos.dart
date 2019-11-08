@@ -144,7 +144,6 @@ class _EventosState extends State<Eventos> {
             ],
           ),
         ),
-
         Row(
           children: <Widget>[
             Container(
@@ -172,16 +171,16 @@ class _EventosState extends State<Eventos> {
                 child: FutureBuilder<List<UserEvents>>(
                   future: ctrlEvento.getEventosHoje(),
                   builder: (context, snapshot) {
-                    switch(snapshot.connectionState) {
+                    switch (snapshot.connectionState) {
                       case ConnectionState.none:
-                      case ConnectionState.waiting: 
+                      case ConnectionState.waiting:
                         return Center(
                           child: CircularProgressIndicator(),
                         );
                         break;
                       case ConnectionState.active:
                       case ConnectionState.done:
-                        if(snapshot.hasError) {
+                        if (snapshot.hasError) {
                           return Text("Houve um erro ao Carregar");
                         } else {
                           return ListView.builder(
@@ -207,7 +206,6 @@ class _EventosState extends State<Eventos> {
             ),
           ],
         ),
-        
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Column(
@@ -230,43 +228,43 @@ class _EventosState extends State<Eventos> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
+                // constraints: BoxConstraints(maxHeight: 350, minHeight: 200),
                 height: 272,
                 child: Center(
                   child: FutureBuilder<List<UserEvents>>(
-                  future: ctrlEvento.getProxEventos(),
-                  builder: (context, snapshot) {
-                    
-                    switch(snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.waiting: 
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                        break;
-                      case ConnectionState.active:
-                      case ConnectionState.done:
-                        if(snapshot.hasError) {
-                          return Text("Houve um erro ao Carregar");
-                        } else {
-                          return ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              List<UserEvents> lista = snapshot.data;
-                              UserEvents evento = lista[index];
-
-                              return ListTile(
-                                title: Text(evento.getTitulo()),
-                                subtitle: Text(evento.getDataIni()),
-                              );
-                            },
+                    future: ctrlEvento.getProxEventos(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                        case ConnectionState.waiting:
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        }
-                        break;
-                    }
+                          break;
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          if (snapshot.hasError) {
+                            return Text("Houve um erro ao Carregar");
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                List<UserEvents> lista = snapshot.data;
+                                UserEvents evento = lista[index];
 
-                    return Text("Erro fora do Switch");
-                  },
-                ),
+                                return ListTile(
+                                  title: Text(evento.getTitulo()),
+                                  subtitle: Text(evento.getDataIni()),
+                                );
+                              },
+                            );
+                          }
+                          break;
+                      }
+
+                      return Text("Erro fora do Switch");
+                    },
+                  ),
                 ),
               ),
             ],
