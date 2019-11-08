@@ -1,7 +1,10 @@
+import 'package:amge/controller/controllerEvents.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
+import '../model/usuario.dart';
 
 class CadastroEventos extends StatefulWidget {
   @override
@@ -22,42 +25,57 @@ class _CadastroEventosState extends State<CadastroEventos> {
   TextEditingController txtDataFimController = TextEditingController();
   TextEditingController txtDescricaoController = TextEditingController();
   TextEditingController txtCepController = TextEditingController();
+  TextEditingController txtCorController = TextEditingController();
+
+  ControllerEvents ctrlEvento = ControllerEvents();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Novo Evento"),
-        backgroundColor: screen.backgroundColor1,
-      ),
-      body: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-            begin: Alignment.bottomRight,
-            end: new Alignment(
-                1.0, 3.0), // 10% of the width, so there are ten blinds.
-            colors: [
-              screen.foregroundColor,
-              screen.foregroundColor,
-              screen.backgroundColor1,
-            ], // whitish to gray
-            tileMode: TileMode.repeated, // repeats the gradient over the canvas
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0), // here the desired height
+          child: AppBar(
+            title: Text("Novo Evento"),
+            backgroundColor: screen.backgroundColor1,
           ),
         ),
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            formTitulo(),
-            dataInicial(context),
-            dataFim(context),
-            formDescricao(),
-            formCep(),
-          ],
-        ),
-      ),
-    );
+        body: Container(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: new BoxDecoration(
+                  gradient: new LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: new Alignment(
+                        1.0, 3.0), // 10% of the width, so there are ten blinds.
+                    colors: [
+                      screen.foregroundColor,
+                      screen.foregroundColor,
+                      screen.backgroundColor1,
+                    ], // whitish to gray
+                    tileMode: TileMode
+                        .repeated, // repeats the gradient over the canvas
+                  ),
+                ),
+                height: MediaQuery.of(context).size.height - 84,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    formTitulo(),
+                    dataInicial(context),
+                    dataFim(context),
+                    formDescricao(),
+                    formCep(),
+                    SizedBox(
+                      height: 50,
+                      width: 50,
+                    ),
+                    btnPadrao(),
+                  ],
+                ),
+              ),
+            )));
   }
 
   Widget formTitulo() {
@@ -391,5 +409,65 @@ class _CadastroEventosState extends State<CadastroEventos> {
     );
   }
 
-  // FALTA PRIORIDADE (COR) E BOTÃO ENVIAR
+  Widget btnPadrao() {
+    String validou;
+    var snack;
+    return Container(
+      width: MediaQuery.of(this.context).size.width,
+      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 8.0),
+      alignment: Alignment.center,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              child: Builder(
+                builder: (context) => FlatButton(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  color: screen.foregroundColor,
+                  onPressed: () async => {
+                    print("onpressed ativado"),
+                    validou = await ctrlEvento.insereEvento(
+                      txtTituloController.text,
+                      txtDataInicioController.text,
+                      txtDataFimController.text,
+                      txtDescricaoController.text,
+                      txtCepController.text,
+                    ),
+                    print("antes de validou"),
+                    print(validou),
+                    if (validou == "OK")
+                      {
+                        snack = SnackBar(
+                          backgroundColor: Colors.greenAccent,
+                          content: Text("Evento cadastrado com Sucesso!"),
+                        ),
+                        Scaffold.of(context).showSnackBar(snack),
+                        await new Future.delayed(const Duration(seconds: 2)),
+                        Navigator.pop(context),
+                      }
+                    else
+                      {
+                        snack = SnackBar(
+                          backgroundColor: Colors.redAccent,
+                          content: Text(validou),
+                        ),
+                        Scaffold.of(context).showSnackBar(snack),
+                      },
+                  },
+                  child: Text(
+                    "Adicionar",
+                    style: TextStyle(
+                      color: screen.backgroundColor2,
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

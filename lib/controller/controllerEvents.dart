@@ -84,5 +84,30 @@ class ControllerEvents {
     }
 
     return lista;
+  }
+
+  insereEvento(String titulo, String dataIni, String dataFim, String descricao, String cep) async {
+    usu = Usuario.ctrlUserInstance;
+    int idUsuario = int.parse(usu.codigo);
+    String retorno;
+    String url = "http://143.106.241.1/cl18463/tcc/api/EventPers/inserir/$titulo/$dataIni/$dataFim/$descricao/$idUsuario/$cep";
+
+    http.Response resposta = await http.get(url);
+    Map<String, dynamic> obj = json.decode(resposta.body);
+    
+    if (obj["status"].toString() == "Sucesso") {
+      String inseriu = obj["dados"].toString();
+
+      if (inseriu == "true") {
+        retorno = "OK";
+      } else {
+        retorno = "Evento já Cadastrado";
+      }
+      
+    } else {
+      retorno = "Erro de Conexão! Tente novamente mais tarde!";
+    }
+
+    return retorno;
   } 
 }
