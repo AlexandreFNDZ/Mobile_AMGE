@@ -1,3 +1,5 @@
+import 'dart:ui' as prefix0;
+
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/model/userEvents.dart';
 import 'package:amge/controller/controllerEvents.dart';
@@ -145,6 +147,7 @@ class _EventosState extends State<Eventos> {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               width: 30,
@@ -190,8 +193,17 @@ class _EventosState extends State<Eventos> {
                               UserEvents evento = lista[index];
 
                               return ListTile(
-                                title: Text(evento.getTitulo()),
-                                subtitle: Text(evento.getDataIni()),
+                                leading: Icon(Icons.local_activity, size: 45, color: Colors.black,),
+                                title: Text(
+                                  evento.getTitulo(),
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  evento.getDataIni(),
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               );
                             },
                           );
@@ -227,6 +239,7 @@ class _EventosState extends State<Eventos> {
                 ),
               ),
               Container(
+                padding: EdgeInsets.only(left: 40),
                 width: MediaQuery.of(context).size.width,
                 // constraints: BoxConstraints(maxHeight: 350, minHeight: 200),
                 height: 272,
@@ -253,8 +266,22 @@ class _EventosState extends State<Eventos> {
                                 UserEvents evento = lista[index];
 
                                 return ListTile(
-                                  title: Text(evento.getTitulo()),
-                                  subtitle: Text(evento.getDataIni()),
+                                  leading: Icon(Icons.timeline, size: 35, color: Colors.white,),
+                                  title: Text(
+                                    evento.getTitulo(),
+                                    style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    evento.getDataIni(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 );
                               },
                             );
