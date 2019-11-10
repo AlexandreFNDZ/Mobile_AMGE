@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:amge/model/usuario.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ControllerUser {
@@ -107,7 +106,7 @@ class ControllerUser {
 
   cadastraUsuario(String pNome, String pUsuario, String pEmail, String pSenha) async {
     String retorno;
-    Usuario usu = new Usuario(email, usuario, senha);
+    // Usuario usu = new Usuario(email, usuario, senha);
     String url = "http://143.106.241.1/cl18463/tcc/api/usuario/inserir/$pNome/$pUsuario/$pEmail/$pSenha";
     respostaUserGet = await http.get(url);
     Map<String, dynamic> obj = json.decode(respostaUserGet.body);

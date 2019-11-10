@@ -5,8 +5,11 @@ import 'package:amge/pages/cadastroScreen.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:amge/pages/telaPrincipal.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  initializeDateFormatting().then((_) => runApp(MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override

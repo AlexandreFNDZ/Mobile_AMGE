@@ -1,11 +1,9 @@
-import 'dart:ui' as prefix0;
 
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/model/userEvents.dart';
 import 'package:amge/controller/controllerEvents.dart';
 import 'package:amge/model/usuario.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Eventos extends StatefulWidget {
   @override
@@ -239,7 +237,7 @@ class _EventosState extends State<Eventos> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 40),
+                padding: EdgeInsets.only(left: 40, bottom: 20),
                 width: MediaQuery.of(context).size.width,
                 // constraints: BoxConstraints(maxHeight: 350, minHeight: 200),
                 height: 272,
@@ -266,6 +264,7 @@ class _EventosState extends State<Eventos> {
                                 UserEvents evento = lista[index];
 
                                 return ListTile(
+                                  onTap: () => print(evento.getCodigo().toString()),
                                   leading: Icon(Icons.timeline, size: 35, color: Colors.white,),
                                   title: Text(
                                     evento.getTitulo(),

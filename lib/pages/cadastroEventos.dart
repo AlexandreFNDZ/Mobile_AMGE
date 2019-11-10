@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import '../model/usuario.dart';
 
 class CadastroEventos extends StatefulWidget {
   @override

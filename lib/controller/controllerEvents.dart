@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/model/userEvents.dart';
 import 'package:amge/model/usuario.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class ControllerEvents {
   static ControllerEvents ctrlEventsInstance;
@@ -18,6 +18,50 @@ class ControllerEvents {
   // http://143.106.241.1/cl18463/tcc/api/eventPers/buscar/1
 
   ControllerEvents.constructor();
+
+
+  Map<DateTime, List<UserEvents>> getMapEvents(List<UserEvents> eventos) {
+    Map<DateTime, List<UserEvents>> _events = new Map<DateTime, List<UserEvents>>();
+    List<DateTime> listaDatas = [];
+    
+    bool existeData;
+    
+    for (var event in eventos) {
+      existeData = false;
+      String dataFormatada = DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
+      for (var data in listaDatas) {
+        if (DateFormat("yyyy-MM-dd").format(data) == dataFormatada) {
+          existeData = true;
+        }
+      }
+
+      if (!existeData) {
+        listaDatas.add(DateTime.parse(dataFormatada));
+      }
+    }
+    print(listaDatas.elementAt(0));
+
+    for (var data in listaDatas) {
+      List<UserEvents> listaEventoDia = [];
+      print("data = " + data.toString());
+
+      for (var event in eventos) {
+        String dataFormatada = DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
+
+        if (DateFormat("yyyy-MM-dd").format(data) == dataFormatada) {
+          listaEventoDia.add(event);
+        }
+      }
+
+      _events.putIfAbsent(data,() => listaEventoDia);
+      print("listaEventoDia " + listaEventoDia.toString());
+      print("evento " + _events.toString());
+    }
+
+    print("map de eventos?? " + _events.toString());
+
+    return _events;
+  }
 
   Future<List<UserEvents>> getEventos() async {
     usu = Usuario.ctrlUserInstance;
@@ -38,7 +82,7 @@ class ControllerEvents {
             event["data_fim"],
             event["descricao"],
             int.parse(event["cod_user"]),
-            int.parse(event["cod_local"]),
+            int.parse(event["cep"]),
             event["cor"]);
         lista.add(evento);
       }
