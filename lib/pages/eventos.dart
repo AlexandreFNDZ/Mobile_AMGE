@@ -1,8 +1,8 @@
-
 import 'package:amge/controller/controllerUser.dart';
 import 'package:amge/model/userEvents.dart';
 import 'package:amge/controller/controllerEvents.dart';
 import 'package:amge/model/usuario.dart';
+import 'package:amge/widgets/detalhesEventos.dart';
 import 'package:flutter/material.dart';
 
 class Eventos extends StatefulWidget {
@@ -191,7 +191,19 @@ class _EventosState extends State<Eventos> {
                               UserEvents evento = lista[index];
 
                               return ListTile(
-                                leading: Icon(Icons.local_activity, size: 45, color: Colors.black,),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return DetalhesEventos(event: evento);
+                                    },
+                                  );
+                                },
+                                leading: Icon(
+                                  Icons.local_activity,
+                                  size: 45,
+                                  color: Colors.black,
+                                ),
                                 title: Text(
                                   evento.getTitulo(),
                                   style: TextStyle(
@@ -264,8 +276,19 @@ class _EventosState extends State<Eventos> {
                                 UserEvents evento = lista[index];
 
                                 return ListTile(
-                                  onTap: () => print(evento.getCodigo().toString()),
-                                  leading: Icon(Icons.timeline, size: 35, color: Colors.white,),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return DetalhesEventos(event: evento);
+                                      },
+                                    );
+                                  },
+                                  leading: Icon(
+                                    Icons.timeline,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ),
                                   title: Text(
                                     evento.getTitulo(),
                                     style: TextStyle(

@@ -1,6 +1,7 @@
 import 'package:amge/controller/controllerEvents.dart';
 import 'package:amge/external_lib/utilsScreen.dart';
 import 'package:amge/model/userEvents.dart';
+import 'package:amge/widgets/detalhesEventos.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -130,17 +131,23 @@ class _CalendarState extends State<Calendar> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 4.0),
                     child: ListTile(
-                      title: Text(
-                        event.getTitulo(),
-                        style: TextStyle(
-                            color: screen.backgroundColor1,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 21),
-                      ),
-                      subtitle:
-                          Text(event.getDataIni() + " - " + event.getDataFim()),
-                      onTap: () => print(' tapped!'),
-                    ),
+                        title: Text(
+                          event.getTitulo(),
+                          style: TextStyle(
+                              color: screen.backgroundColor1,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 21),
+                        ),
+                        subtitle: Text(
+                            event.getDataIni() + " - " + event.getDataFim()),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DetalhesEventos(event: event);
+                            },
+                          );
+                        }),
                   ))
               ?.toList() ??
           [],
