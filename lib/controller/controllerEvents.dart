@@ -19,16 +19,17 @@ class ControllerEvents {
 
   ControllerEvents.constructor();
 
-
   Map<DateTime, List<UserEvents>> getMapEvents(List<UserEvents> eventos) {
-    Map<DateTime, List<UserEvents>> _events = new Map<DateTime, List<UserEvents>>();
+    Map<DateTime, List<UserEvents>> _events =
+        new Map<DateTime, List<UserEvents>>();
     List<DateTime> listaDatas = [];
-    
+
     bool existeData;
-    
+
     for (var event in eventos) {
       existeData = false;
-      String dataFormatada = DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
+      String dataFormatada =
+          DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
       for (var data in listaDatas) {
         if (DateFormat("yyyy-MM-dd").format(data) == dataFormatada) {
           existeData = true;
@@ -39,21 +40,21 @@ class ControllerEvents {
         listaDatas.add(DateTime.parse(dataFormatada));
       }
     }
-    print(listaDatas.elementAt(0));
-
+    
     for (var data in listaDatas) {
       List<UserEvents> listaEventoDia = [];
       print("data = " + data.toString());
 
       for (var event in eventos) {
-        String dataFormatada = DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
+        String dataFormatada =
+            DateFormat("yyyy-MM-dd").format(DateTime.parse(event.getDataIni()));
 
         if (DateFormat("yyyy-MM-dd").format(data) == dataFormatada) {
           listaEventoDia.add(event);
         }
       }
 
-      _events.putIfAbsent(data,() => listaEventoDia);
+      _events.putIfAbsent(data, () => listaEventoDia);
       print("listaEventoDia " + listaEventoDia.toString());
       print("evento " + _events.toString());
     }
@@ -168,8 +169,7 @@ class ControllerEvents {
     return lista;
   }
 
-  insereEvento(String titulo, String dataIni, String dataFim, String descricao,
-      String cep) async {
+  insereEvento(String titulo, String dataIni, String dataFim, String descricao, String cep) async {
     usu = Usuario.ctrlUserInstance;
     int idUsuario = int.parse(usu.codigo);
     String retorno;
@@ -188,6 +188,29 @@ class ControllerEvents {
         retorno = "OK";
       } else {
         retorno = "Evento já Cadastrado";
+      }
+    } else {
+      retorno = "Erro de Conexão! Tente novamente mais tarde!";
+    }
+
+    return retorno;
+  }
+
+  excluiEvento(int codigo) async {
+    String retorno;
+    String url = "http://143.106.241.1/cl18463/tcc/api/EventPers/deletar/$codigo";
+    
+    http.Response resposta = await http.get(url);
+    // print(resposta.toString());
+    Map<String, dynamic> obj = json.decode(resposta.body);
+
+    if (obj["status"].toString() == "Sucesso") {
+      String inseriu = obj["dados"].toString();
+
+      if (inseriu == "true") {
+        retorno = "OK";
+      } else {
+        retorno = "Evento não encontrado";
       }
     } else {
       retorno = "Erro de Conexão! Tente novamente mais tarde!";

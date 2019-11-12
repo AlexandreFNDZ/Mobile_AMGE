@@ -54,7 +54,6 @@ class _CalendarState extends State<Calendar> {
   }
 
   void _onDaySelected(DateTime day, List<UserEvents> events) {
-    print('CALLBACK: _onDaySelected');
     setState(() {
       _selectedEvents = events;
     });
@@ -113,6 +112,11 @@ class _CalendarState extends State<Calendar> {
       calendarController: _ctrlCalendar,
       events: _events,
       onDaySelected: (date, events) {
+        print(events.isEmpty);
+        if (events.isEmpty) {
+          events = new List<UserEvents>();
+        }
+
         _onDaySelected(date, events);
       },
     );
@@ -146,7 +150,20 @@ class _CalendarState extends State<Calendar> {
                             builder: (context) {
                               return DetalhesEventos(event: event);
                             },
-                          );
+                          ).then((_) => setState(() {
+                                _getEventsMap().then((value) {
+                                  new Future<String>.delayed(
+                                          new Duration(milliseconds: 10),
+                                          () => '["123", "456", "789"]')
+                                      .then((String value) {
+                                    setState(() {
+                                      print("Agora foi!");
+                                      // _onDaySelected(DateTime.now(), _selectedEvents);
+                                    });
+                                  });
+                                  print('OK!!!');
+                                });
+                              }));
                         }),
                   ))
               ?.toList() ??

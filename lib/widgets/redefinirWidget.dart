@@ -238,13 +238,13 @@ class _RedefinirSenhaState extends State<RedefinirSenha> {
                         {atualizou = "Campos senhas diferem!"},
                       if (atualizou == "OK")
                         {
-                          snack = SnackBar(
-                            backgroundColor: Colors.greenAccent,
-                            content: Text("Senha alterada com Sucesso!"),
-                          ),
-                          Scaffold.of(context).showSnackBar(snack),
-                          await new Future.delayed(const Duration(seconds: 2)),
-                          Navigator.maybePop(newContext),
+                          // snack = SnackBar(
+                          //   backgroundColor: Colors.greenAccent,
+                          //   content: Text("Senha alterada com Sucesso!"),
+                          // ),
+                          // Scaffold.of(context).showSnackBar(snack),
+                          // // await new Future.delayed(const Duration(seconds: 2)),
+                          // Navigator.maybePop(newContext),
                         }
                       else
                         {

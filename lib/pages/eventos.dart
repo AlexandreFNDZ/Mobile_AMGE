@@ -197,7 +197,7 @@ class _EventosState extends State<Eventos> {
                                     builder: (context) {
                                       return DetalhesEventos(event: evento);
                                     },
-                                  );
+                                  ).then((_)=>setState((){}));
                                 },
                                 leading: Icon(
                                   Icons.local_activity,
@@ -282,7 +282,7 @@ class _EventosState extends State<Eventos> {
                                       builder: (context) {
                                         return DetalhesEventos(event: evento);
                                       },
-                                    );
+                                    ).then((_)=>setState((){}));
                                   },
                                   leading: Icon(
                                     Icons.timeline,

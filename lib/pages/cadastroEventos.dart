@@ -425,12 +425,12 @@ class _CadastroEventosState extends State<CadastroEventos> {
                       vertical: 10.0, horizontal: 10.0),
                   color: screen.foregroundColor,
                   onPressed: () async => {
-                    print("onpressed ativado"),
-                    print(txtTituloController.text),
-                    print(txtDataInicioController.text),
-                    print(txtDataFimController.text),
-                    print(txtDescricaoController.text),
-                    print(txtCepController.text),
+                    // print("onpressed ativado"),
+                    // print(txtTituloController.text),
+                    // print(txtDataInicioController.text),
+                    // print(txtDataFimController.text),
+                    // print(txtDescricaoController.text),
+                    // print(txtCepController.text),
                     validou = await ctrlEvento.insereEvento(
                       txtTituloController.text,
                       txtDataInicioController.text,
